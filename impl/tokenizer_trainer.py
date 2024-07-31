@@ -34,9 +34,8 @@ class TokenizerTrainer:
                     continue
                 input_index = position[0]
                 token_index = position[1]
-                (left_token_index, right_token_index) = self._get_neighbor_indexes(input_index, token_index)
-                self._update_left_token(input_index, left_token_index, merge_stat, next_token)
-                self._update_right_token(input_index, right_token_index, merge_stat, next_token)
+                self._update_left_token(input_index, token_index, merge_stat, next_token)
+                self._update_right_token(input_index, token_index, merge_stat, next_token)
                 self._positions[input_index].replace_pair(token_index, next_token)
                 merge_stat.positions.remove((input_index, token_index))
                     
@@ -44,21 +43,22 @@ class TokenizerTrainer:
             self._tokens_map[next_token] = self._tokens_map[merge_stat.pair[0]] + self._tokens_map[merge_stat.pair[1]]
             next_token += 1
             
-    def _update_right_token(self, input_index, right_token_index, merge_stat, new_token):
+    def _update_right_token(self, input_index, token_index, merge_stat, new_token):
+        positions = self._positions[input_index]
+        second_token_index = positions.get_next_index(token_index)
+        right_token_index = positions.get_second_next_index(token_index)
         if right_token_index == None:
             return
-        positions = self._positions[input_index]
-        second_token_in_original_pair_index = positions.get_previous_index(right_token_index)
-        first_token_in_original_pair_index = positions.get_previous_index(second_token_in_original_pair_index)
         pair = (merge_stat.pair[1], positions.get_by_index(right_token_index))
-        self._remove_position_from_pair(merge_stat, pair, input_index, second_token_in_original_pair_index)
+        self._remove_position_from_pair(merge_stat, pair, input_index, second_token_index)
         new_pair = (new_token, pair[1])
-        self._add_position_to_pair(new_pair, input_index, first_token_in_original_pair_index)
+        self._add_position_to_pair(new_pair, input_index, token_index)
             
-    def _update_left_token(self, input_index, left_token_index, merge_stat, new_token):
+    def _update_left_token(self, input_index, token_index, merge_stat, new_token):
+        positions = self._positions[input_index]
+        left_token_index = positions.get_previous_index(token_index)
         if left_token_index == None:
             return
-        positions = self._positions[input_index]
         pair = (positions.get_by_index(left_token_index), merge_stat.pair[0])
         self._remove_position_from_pair(merge_stat, pair, input_index, left_token_index)
         new_pair = (pair[0], new_token)
@@ -82,12 +82,6 @@ class TokenizerTrainer:
         stat = self._stats.delete_by_map_key(pair) if self._stats.contains(pair) else StatsEntry(pair, set())
         stat.positions.add((input_index, token_index))
         self._stats.push(stat)
-            
-    def _get_neighbor_indexes(self, input_index, token_index):
-        positions = self._positions[input_index]
-        left_token_index = positions.get_previous_index(token_index)
-        right_token_index = positions.get_second_next_index(token_index)
-        return (left_token_index, right_token_index)
          
     def _calc_initial_stats(self):
         self._stats = MaxPriorityMap(
