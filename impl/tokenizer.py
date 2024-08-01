@@ -4,7 +4,6 @@ from tokenizer_trainer import TokenizerTrainer
 class Tokenizer:
     def __init__(self, dict_size):
         self._dict_size = dict_size
-        self._merges = []
         self._chars_map = {}
         self._tokens_map = {}
         
@@ -18,14 +17,12 @@ class Tokenizer:
     def train(self, strings):
         self._map_chars(strings)
         input_as_tokens = self._to_basic_token_ids(strings)
-        self._merges = []
         trainer = TokenizerTrainer(
             input_as_tokens,
             self._dict_size - len(self._chars_map),
-            self._tokens_map,
-            self._merges)
+            self._tokens_map)
         trainer.train(len(self._chars_map))
-        return self._merges
+        return self._tokens_map
         
     def _map_chars(self, strings):
         self._chars_map = {}

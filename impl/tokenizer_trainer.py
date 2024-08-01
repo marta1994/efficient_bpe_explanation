@@ -1,15 +1,6 @@
 from linked_array import LinkedArray
 from max_priority_map import MaxPriorityMap
 
-class Merge:
-    def __init__(self, first, second, target):
-        self.first = first
-        self.second = second
-        self.target = target
-        
-    def __str__(self):
-        return f'first: {self.first}, second: {self.second}, target: {self.target}'
-
 class StatsEntry:
     def __init__(self, pair, positions):
         self.pair = pair
@@ -17,16 +8,15 @@ class StatsEntry:
 
 
 class TokenizerTrainer:
-    def __init__(self, input_as_basic_tokens, target_merge_count, tokens_map, merges):
+    def __init__(self, input_as_basic_tokens, target_merge_count, tokens_map):
         self._input_as_basic_tokens = input_as_basic_tokens
         self._target_merge_count = target_merge_count
         self._tokens_map = tokens_map
-        self._merges = merges
         
     def train(self, next_token):
         self._positions = [LinkedArray(basic_tokens) for basic_tokens in self._input_as_basic_tokens]
         self._calc_initial_stats()
-        while len(self._merges) < self._target_merge_count:
+        for _ in range(self._target_merge_count):
             merge_stat = self._stats.pop()
             for position in list(merge_stat.positions):
                 # The original collection may be modified in the loop
@@ -38,8 +28,7 @@ class TokenizerTrainer:
                 self._update_right_token(input_index, token_index, merge_stat, next_token)
                 self._positions[input_index].replace_pair(token_index, next_token)
                 merge_stat.positions.remove((input_index, token_index))
-                    
-            self._merges.append(Merge(merge_stat.pair[0], merge_stat.pair[1], next_token))
+ 
             self._tokens_map[next_token] = self._tokens_map[merge_stat.pair[0]] + self._tokens_map[merge_stat.pair[1]]
             next_token += 1
             
