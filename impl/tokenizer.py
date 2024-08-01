@@ -1,3 +1,4 @@
+from to_tokens_converter import ToTokensConverter
 from tokenizer_trainer import TokenizerTrainer
 
 class Tokenizer:
@@ -6,6 +7,13 @@ class Tokenizer:
         self._merges = []
         self._chars_map = {}
         self._tokens_map = {}
+        
+    def to_tokens(self, strings):
+        toTokensConverter = ToTokensConverter(self._tokens_map)
+        return toTokensConverter.to_tokens(strings)
+    
+    def from_tokens(self, tokens):
+        return [''.join(self._tokens_map[token] for token in token_str) for token_str in tokens]
         
     def train(self, strings):
         self._map_chars(strings)
