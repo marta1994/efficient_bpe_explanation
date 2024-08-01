@@ -1,5 +1,4 @@
 import unittest
-import random
 
 from linked_array import LinkedArray
 
@@ -7,46 +6,6 @@ class LinkedArrayItem:
     def __init__(self, index, value):
         self.index = index
         self.value = value
-
-class NaiveLinkedArray:
-    def __init__(self, input):
-        self.array = [LinkedArrayItem(i, input[i]) for i in input]
-        
-    def get_by_index(self, index):
-        for item in self.array:
-            if item.index == index:
-                return item.value
-        raise ValueError("Cound not find item by index")
-    
-    def get_previous_index(self, index):
-        ind = next((i for i, item in enumerate(self.array) if item.index == index), -1)
-        if ind == -1:
-            raise ValueError("Cound not find item by index")
-        if ind == 0:
-            return None
-        return self.array[ind-1].index
-    
-    def get_next_index(self, index):
-        ind = next((i for i, item in enumerate(self.array) if item.index == index), -1)
-        if ind == -1:
-            raise ValueError("Cound not find item by index")
-        if ind > len(self.array) - 2:
-            return None
-        return self.array[ind+1].index
-    
-    def get_second_next_index(self, index):
-        ind = next((i for i, item in enumerate(self.array) if item.index == index), -1)
-        if ind == -1:
-            raise ValueError("Cound not find item by index")
-        if ind > len(self.array) - 3:
-            return None
-        return self.array[ind+2].index
-    
-    def replace_pair(self, index, new_item):
-        ind = next((i for i, item in enumerate(self.array) if item.index == index), -1)
-        if ind == -1:
-            raise ValueError("Cound not find item by index")
-        self.array = self.array[:ind] + [LinkedArrayItem(index, new_item)] + self.array[ind + 2:]
 
 class TestLinkedArray(unittest.TestCase):
     
@@ -138,43 +97,6 @@ class TestLinkedArray(unittest.TestCase):
         self.assertEqual(arr.get_next_index(0), None)
         self.assertEqual(arr.get_previous_index(0), None)
         self.assertEqual(arr.get_second_next_index(0), None)
-        
-    # def test_random_remplace_multiple_pairs(self):
-    #     test_count = 200
-    #     input_size = [2, 5]
-    #     replacements_count = [1, 20]
-    #     for _ in range(test_count):
-    #         operations = []
-    #         try:
-    #             arr_len = random.randint(input_size[0], input_size[1])
-    #             source_arr = list(range(0, arr_len))
-    #             random.shuffle(source_arr)
-    #             operations.append('source array: ' + '; '.join([str(i) for i in source_arr]))
-    #             arr = LinkedArray(source_arr)
-    #             check_arr = NaiveLinkedArray(source_arr)
-    #             actual_repl_count = min(arr_len-1, random.randint(replacements_count[0], replacements_count[1]))
-    #             next_replacement = arr_len
-    #             for _ in range(actual_repl_count):
-    #                 replacemenet_index = random.randint(0, len(check_arr.array) - 2)
-    #                 replacement_item = check_arr.array[replacemenet_index]
-    #                 operations.append('replace pair: index=' + str(replacement_item.index) + '; new value=' + str(next_replacement))
-    #                 try:
-    #                     arr.replace_pair(replacement_item.index, next_replacement)
-    #                 except:
-    #                     print(' | '.join([str(i) for i in check_arr.array]))
-    #                     raise
-    #                 check_arr.replace_pair(replacement_item.index, next_replacement)
-    #                 self.assertEqual(arr.get_by_index(replacement_item.index), check_arr.get_by_index(replacement_item.index), 'operations:\n' + '| '.join(operations))
-    #                 current_ind = 0
-    #                 for i in range(len(check_arr.array)):
-    #                     self.assertNotEqual(current_ind, None, 'operations:\n' + '| '.join(operations))
-    #                     self.assertEqual(check_arr.array[i].value, arr.get_by_index(current_ind), 'operations:\n' + '| '.join(operations))
-    #                     current_ind = arr.get_next_index(current_ind)
-    #                 self.assertEqual(current_ind, None, 'operations:\n' + '| '.join(operations))
-    #                 next_replacement += 1
-    #         except:
-    #             print('operations:\n' + '| '.join(operations))
-    #             raise
                 
                 
 if __name__ == '__main__':
