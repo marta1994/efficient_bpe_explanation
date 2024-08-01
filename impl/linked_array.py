@@ -18,26 +18,26 @@ class LinkedArray:
     
     def get_by_index(self, index):
         if self._array[index] == None:
-            raise "No item by index"
+            raise ValueError("No item by index")
         return self._array[index].value
     
     def get_previous_index(self, index):
         if self._array[index] == None:
-            raise "No item by index"
+            raise ValueError("No item by index")
         if self._array[index].previous == None:
             return None
         return self._array[index].previous.index
     
     def get_next_index(self, index):
         if self._array[index] == None:
-            raise "No item by index"
+            raise ValueError("No item by index")
         if self._array[index].next == None:
             return None
         return self._array[index].next.index
     
     def get_second_next_index(self, index):
         if self._array[index] == None:
-            raise "No item by index"
+            raise ValueError("No item by index")
         if self._array[index].next == None or self._array[index].next.next == None:
             return None
         return self._array[index].next.next.index
@@ -47,7 +47,7 @@ class LinkedArray:
     
     def replace_pair(self, index, new_item):
         if index > len(self._array)-2 or self._array[index] == None or self._array[index].next == None:
-            raise "Invalid index"
+            raise ValueError("Invalid index")
         self._array[index].value = new_item
         self._array[self._array[index].next.index] = None
         self._array[index].next = self._array[index].next.next
