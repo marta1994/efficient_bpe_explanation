@@ -1,13 +1,15 @@
 class TokenNode:
-    def __init__(self, basic_char, token, parent, children):
+    def __init__(self, basic_char: str, token: int, parent, children):
         self.parent = parent
         self.basic_char = basic_char
         self.token = token
         self.children = children
 
 class ToTokensConverter:
-    def __init__(self, token_map):
+    def __init__(self, token_map: dict, chars_map: dict):
         self._token_map = token_map
+        self._chars_map = chars_map
+        self._unk_key = 'unknown'
         self._init_token_tree()
         
     def to_tokens(self, strings):
@@ -17,6 +19,10 @@ class ToTokensConverter:
         tokens = []
         char_index = 0
         while char_index < len(string):
+            if string[char_index] not in self._chars_map:
+                tokens.append(self._chars_map[self._unk_key])
+                char_index += 1
+                continue
             current_nodes = self._token_roots
             last_node_with_token = None
             last_index_with_token = char_index
@@ -43,10 +49,10 @@ class ToTokensConverter:
             for char in string:
                 if char in current_nodes:
                     last_node = current_nodes[char]
-                    current_nodes = last_node.children
                 else:
                     last_node = TokenNode(char, None, last_node, {})
                     current_nodes[char] = last_node
+                current_nodes = last_node.children
             if last_node.token != None:
                 raise KeyError('The token is already taken')
             last_node.token = token

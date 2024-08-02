@@ -8,16 +8,18 @@ class StatsEntry:
 
 
 class TokenizerTrainer:
-    def __init__(self, input_as_basic_tokens, target_merge_count, tokens_map):
+    def __init__(self, input_as_basic_tokens, min_token_occurance, tokens_map):
         self._input_as_basic_tokens = input_as_basic_tokens
-        self._target_merge_count = target_merge_count
+        self._min_token_occurance = min_token_occurance
         self._tokens_map = tokens_map
         
     def train(self, next_token):
         self._positions = [LinkedArray(basic_tokens) for basic_tokens in self._input_as_basic_tokens]
         self._calc_initial_stats()
-        for _ in range(self._target_merge_count):
+        while True:
             merge_stat = self._stats.pop()
+            if len(merge_stat.positions) < self._min_token_occurance:
+                break
             for position in list(merge_stat.positions):
                 # The original collection may be modified in the loop
                 if position not in merge_stat.positions:

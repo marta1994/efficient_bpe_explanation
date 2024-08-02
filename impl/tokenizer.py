@@ -2,13 +2,13 @@ from to_tokens_converter import ToTokensConverter
 from tokenizer_trainer import TokenizerTrainer
 
 class Tokenizer:
-    def __init__(self, dict_size):
-        self._dict_size = dict_size
+    def __init__(self, min_token_occurance):
+        self._min_token_occurance = min_token_occurance
         self._chars_map = {}
         self._tokens_map = {}
         
     def to_tokens(self, strings):
-        toTokensConverter = ToTokensConverter(self._tokens_map)
+        toTokensConverter = ToTokensConverter(self._tokens_map, self._chars_map)
         return toTokensConverter.to_tokens(strings)
     
     def from_tokens(self, tokens):
@@ -19,7 +19,7 @@ class Tokenizer:
         input_as_tokens = self._to_basic_token_ids(strings)
         trainer = TokenizerTrainer(
             input_as_tokens,
-            self._dict_size - len(self._chars_map),
+            self._min_token_occurance,
             self._tokens_map)
         trainer.train(len(self._chars_map))
         return self._tokens_map
