@@ -1,6 +1,5 @@
 import unittest
 
-from tokenizer_for_test import NaiveTokenizer
 from tokenizer import Tokenizer
 
 class TestTokenizer(unittest.TestCase):
@@ -8,6 +7,20 @@ class TestTokenizer(unittest.TestCase):
     def test_basic_string(self):
        train_input = ['aaabdaaabac']
        test_input = ['aaabaaabdabacabdaaabac']
+       self._test_input(train_input, test_input, 2)
+       
+    def test_arrive_at_the_same_toke_from_different_palaces(self):
+       train_input = ["I'm on top of the hill and I can see a fire in the woods...",
+                      "I'm afraid that the tornado is coming to our area...",
+                      'this is ridiculous....',
+                      "No way...I can't eat that shit",
+                      'Barbados #Bridgetown JAMAICA \x89ÛÒ Two cars set ablaze: SANTA CRUZ \x89ÛÓ Head of the St Elizabeth Police Superintende...  http://t.co/wDUEaj8Q4J',
+                      'I wanted to set Chicago ablaze with my preaching... But not my hotel! http://t.co/o9qknbfOFX',
+                      'SANTA CRUZ \x89ÛÓ Head of the St Elizabeth Police Superintendent Lanford Salmon has r ... - http://t.co/vplR5Hka2u http://t.co/SxHW2TNNLf',
+                      "Progressive greetings!\n\nIn about a month students would have set their pens ablaze in The Torch Publications'... http://t.co/9FxPiXQuJt",
+                      'Reported motor vehicle accident in Curry on Herman Rd near Stephenson involving an overturned vehicle. Please use... http://t.co/YbJezKuRW1',
+                      'the pastor was not in the scene of the accident......who was the owner of the range rover ?']
+       test_input = train_input
        self._test_input(train_input, test_input, 2)
        
     def test_real_string(self):
@@ -42,20 +55,17 @@ class TestTokenizer(unittest.TestCase):
        
     def _test_input(self, train_input, test_input, min_token_occurance):
        tokenizer = Tokenizer(min_token_occurance)
-       naive_tokenizer = NaiveTokenizer(min_token_occurance)
        train_char_set = set(''.join(train_input))
        test_char_set = set(''.join(test_input))
        unknown_test_characters = test_char_set - train_char_set
        test_input_with_unknowns = [''.join(char if char not in unknown_test_characters else '□' for char in inp) for inp in test_input]
        
-       naive_tokenizer.train(train_input)
-       tokenizer.train(train_input)
-       naive_tokens = naive_tokenizer.to_tokens(test_input)
+       tokenizer_map = tokenizer.train(train_input)
        tokens = tokenizer.to_tokens(test_input)
-       string_from_naive_tokens = naive_tokenizer.from_tokens(naive_tokens)
        string_from_tokens = tokenizer.from_tokens(tokens)
        
-       self.assertEqual(string_from_naive_tokens, string_from_tokens)
+       # All tokens should map to unique strings.
+       self.assertEqual(len(tokenizer_map), len(set(tokenizer_map.values())))
        self.assertEqual(test_input_with_unknowns, string_from_tokens)
                 
 if __name__ == '__main__':
