@@ -12,35 +12,40 @@ class TokenizerTrainer:
         self._input_as_basic_tokens = input_as_basic_tokens
         self._min_token_occurance = min_token_occurance
         self._tokens_map = tokens_map
+        # Accounts for the strings which already had tokens assigned.
+        # Ensures no string is assigned to more than one token.
+        self._str_to_token_map = {}
         
     def train(self, next_token):
         self._positions = [LinkedArray(basic_tokens) for basic_tokens in self._input_as_basic_tokens]
         self._calc_initial_stats()
-        str_to_token_map = {}
         while True:
             merge_stat = self._stats.pop()
             if len(merge_stat.positions) < self._min_token_occurance:
                 break
-            # check if the token value was already assigned to a token id.
-            token_str_val = self._tokens_map[merge_stat.pair[0]] + self._tokens_map[merge_stat.pair[1]]
-            pair_token = -1 
-            if token_str_val in str_to_token_map:
-                pair_token = str_to_token_map[token_str_val]
-            else:
-                pair_token = next_token
-                self._tokens_map[pair_token] = token_str_val
-                str_to_token_map[token_str_val] = pair_token
-                next_token += 1
+            (current_token, next_token) = self._get_current_and_next_token(next_token, merge_stat)
             for position in list(merge_stat.positions):
                 # The original collection may be modified in the loop
                 if position not in merge_stat.positions:
                     continue
                 input_index = position[0]
                 token_index = position[1]
-                self._update_left_token(input_index, token_index, merge_stat, pair_token)
-                self._update_right_token(input_index, token_index, merge_stat, pair_token)
-                self._positions[input_index].replace_pair(token_index, pair_token)
+                self._update_left_token(input_index, token_index, merge_stat, current_token)
+                self._update_right_token(input_index, token_index, merge_stat, current_token)
+                self._positions[input_index].replace_pair(token_index, current_token)
                 merge_stat.positions.remove((input_index, token_index))
+                
+    def _get_current_and_next_token(self, next_token, merge_stat):
+        token_str_val = self._tokens_map[merge_stat.pair[0]] + self._tokens_map[merge_stat.pair[1]]
+        current_token = -1 
+        if token_str_val in self._str_to_token_map:
+            current_token = self._str_to_token_map[token_str_val]
+        else:
+            current_token = next_token
+            self._tokens_map[current_token] = token_str_val
+            self._str_to_token_map[token_str_val] = current_token
+            next_token += 1
+        return (current_token, next_token)
             
     def _update_right_token(self, input_index, token_index, merge_stat, new_token):
         positions = self._positions[input_index]
