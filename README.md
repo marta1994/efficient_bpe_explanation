@@ -44,5 +44,45 @@ Repeat steps 1-3 until a predefined stopping criterion is met. Each iteration en
 
 In conclusion, the naive BPE training algorithm has a time complexity of **O(N * M)**, where N is the text length and M is the number of merges performed.
 
+## BPE optimization
+
+While the naive BPE training algorithm provides a clear understanding of the process, it leaves room for improvement in terms of efficiency. Let's identify some key areas where we can potentially enhance the time complexity:
+
+* **Redundant Pair Counting**: Recalculating all pair occurrences after every merge seems excessive. Can we devise a smarter way to update the counts incrementally?
+
+* **Efficient Pair Selection**: Finding the most frequent pair currently involves iterating through all pair counts. Can we employ a more efficient data structure to streamline this selection process?
+
+* **Streamlined Text Representation**: Storing the text in its raw form might lead to suboptimal performance when replacing pairs. Could we adopt a representation that facilitates faster merging operations?
+
+By addressing these bottlenecks, we can pave the way for a more performant BPE training algorithm. Let's delve into the specifics of each optimization opportunity and explore how to implement them effectively.
+
+### Efficient Pair Selection with a Heap
+
+Instead of linearly searching through all possible pairs to find the most frequent one, we can leverage a [heap (priority queue)][priority_queue] data structure for efficient retrieval.
+
+* **Maintaining the Heap**: At each step of the merging process, we'll keep a heap that stores all the current pairs along with their frequency counts. The heap is organized based on the "count" field, ensuring that the pair with the highest count (the most frequent one) always sits at the top.
+
+* **Quick Retrieval**: When it's time to decide which pair to merge, we simply peek at the top of the heap. This gives us immediate access to the most frequent pair without having to scan the entire list.
+
+* **Updating the Heap**: As merges occur and new pairs are formed, we'll need to update the heap accordingly. This involves potentially removing existing pairs, adding new ones, and adjusting the heap structure to maintain the correct order.
+
+### Streamlining Pair Replacement with Position Tracking
+
+To efficiently replace all occurrences of a selected pair, we'll augment our heap objects with position information:
+
+* **Positions Set**: Alongside the pair itself and its count, we'll include a set of position identifiers (EG integers, pairs of integers depending on the input format) representing the positions where this pair appears in the text.
+
+* **Targeted Replacement**: Once we've identified the most frequent pair from the heap, we can directly access its positions set and iterate through it. This allows us to pinpoint the exact locations where the pair needs to be replaced with the new token, eliminating the need for a full text scan.
+
+**Updated Object Structure:**
+```
+{
+    pair: (token, token)
+    positions: set<position_index> 
+    count: int  # heap key, derived from len(positions)
+}
+```
+
 [bpe_walk_through]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/bpe_walk_through.gif
 [bpe_wiki]: https://en.wikipedia.org/wiki/Byte_pair_encoding
+[priority_queue]: https://en.wikipedia.org/wiki/Priority_queue
