@@ -1,3 +1,3 @@
 # Optimized BPE tokenization explained
 
-![](https://github.com/efficient_bpe_explanation/blob/bpe_walk_through.gif)
+![bpe walk through](https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/bpe_walk_through.gif)
