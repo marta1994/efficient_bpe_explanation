@@ -144,6 +144,20 @@ Consider the string "abcddbcdabdcbabab".  If we replace the first pair "ab" with
 
 In essence, the [`LinkedArray`][linked_array] acts as a bridge between the direct index access of arrays and the flexible insertion/deletion capabilities of linked lists. It's specifically designed to optimize the pair replacement process in BPE tokenization, contributing to a more performant and streamlined algorithm.
 
+## BPE Tokenizer Training: A Visual Guide
+
+Let's embark on a journey to understand the inner workings of BPE tokenizer training through a hands-on example. We'll take the string `"aaabdaaadac"` and illustrate how the algorithm progressively merges pairs of characters to build a vocabulary of subwords.
+
+In this exploration, we'll leverage the optimized data structures we've discussed: the priority map for efficient pair selection and the linked array for streamlined text representation and merging.
+
+### Initial Setup
+
+We begin by initializing our priority map and linked array with the input string. The priority map will store all unique pairs of characters along with their counts and positions in the text. The linked array will provide a flexible representation of the string, enabling efficient pair replacement.
+
+The initial state of these structures is depicted below:
+
+![Example: initial setup](https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/example_initial.png)
+
 [bpe_walk_through]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/bpe_walk_through.gif
 [bpe_wiki]: https://en.wikipedia.org/wiki/Byte_pair_encoding
 [priority_queue]: https://en.wikipedia.org/wiki/Priority_queue
