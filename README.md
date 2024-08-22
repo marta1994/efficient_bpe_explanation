@@ -95,7 +95,14 @@ To achieve this, we require the ability to retrieve heap items based on their "p
 * Update their position sets to reflect the impact of merges.
 * Maintain the heap's priority order based on the updated counts.
 
+#### [Max priroty map implementation][max_priority_map]
+
+The [`MaxPriorityMap`][max_prority_map_class] class implements a combination of a max-heap (priority queue) and a map. It allows efficient storage and retrieval of items based on two keys: a `heap_key` used for maintaining the heap's priority order, and a `map_key` used for quick item lookup. The heap ensures that the item with the highest `heap_key` value is always at the top, while the map provides direct access to items using their `map_key`. The class includes methods for pushing new items, popping the maximum item, checking for item existence, deleting items by `map_key`, and maintaining the heap's structural integrity through `_heapify_up` and `_heapify_down` operations.
+
+
 [bpe_walk_through]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/bpe_walk_through.gif
 [bpe_wiki]: https://en.wikipedia.org/wiki/Byte_pair_encoding
 [priority_queue]: https://en.wikipedia.org/wiki/Priority_queue
 [affected_neighbors]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/affected_neighbors.gif
+[max_priority_map]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/impl/max_priority_map.py
+[max_prority_map_class]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/impl/max_priority_map.py#L1
