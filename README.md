@@ -128,6 +128,20 @@ The [`LinkedArray`][linked_array] class presents a specialized data structure ta
   * Replaces the pair of tokens starting at index with the new_item.
   * Updates both the linked list (removing the two original nodes and inserting a new one) and the array (setting the index of the second token in the pair to None and updating the index of the new node).
 
+#### Example Usage
+
+Consider the string "abcddbcdabdcbabab".  If we replace the first pair "ab" with "Z", the linked array efficiently handles this merge, resulting in:
+
+* String: "Zcddbcdabdcbabab"
+* Array:
+  * 0 -> "Z"
+  * 1 -> None
+  * 2 -> "c"
+  * 3 -> "d"
+  * ... (rest of the indices remain unchanged)
+
+![Linked array][linked_array_gif]
+
 In essence, the [`LinkedArray`][linked_array] acts as a bridge between the direct index access of arrays and the flexible insertion/deletion capabilities of linked lists. It's specifically designed to optimize the pair replacement process in BPE tokenization, contributing to a more performant and streamlined algorithm.
 
 [bpe_walk_through]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/bpe_walk_through.gif
@@ -138,3 +152,4 @@ In essence, the [`LinkedArray`][linked_array] acts as a bridge between the direc
 [max_prority_map_class]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/impl/max_priority_map.py#L1
 [associative_array]: https://en.wikipedia.org/wiki/Associative_array
 [linked_array]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/impl/linked_array.py#L8
+[linked_array_gif]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/linked_array.gif
