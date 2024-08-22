@@ -83,6 +83,19 @@ To efficiently replace all occurrences of a selected pair, we'll augment our hea
 }
 ```
 
+### Handling Neighboring Pairs with a Priority Map
+
+Replacing a pair not only affects its own occurrences but also impacts the neighboring pairs in the text. Let's consider how to efficiently manage these changes. When we replace a pair like "ba" with "Z" in string "abac" with respective positions `[p1, p2, p3, p4]`, the original pairs "ab" and "ac" disappear, while new pairs "aZ" and "Zc" emerge. We need to reflect these changes in our heap to maintain accurate pair counts and positions.
+
+![affected neighbors][affected_neighbors]
+
+To achieve this, we require the ability to retrieve heap items based on their "pair" key, not just their priority (count). This allows us to modify the positions set of relevant pairs, removing old positions and adding new ones. A combination of a map (for efficient key-based retrieval) and a priority queue (for maintaining the count-based order) emerges as the ideal solution. This "priority map" enables us to:
+
+* Quickly locate heap items associated with specific pairs.
+* Update their position sets to reflect the impact of merges.
+* Maintain the heap's priority order based on the updated counts.
+
 [bpe_walk_through]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/bpe_walk_through.gif
 [bpe_wiki]: https://en.wikipedia.org/wiki/Byte_pair_encoding
 [priority_queue]: https://en.wikipedia.org/wiki/Priority_queue
+[affected_neighbors]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/affected_neighbors.gif
