@@ -99,6 +99,36 @@ To achieve this, we require the ability to retrieve heap items based on their "p
 
 The [`MaxPriorityMap`][max_prority_map_class] class implements a combination of a max-heap ([priority queue][priority_queue]) and a [map][associative_array]. It allows efficient storage and retrieval of items based on two keys: a `heap_key` used for maintaining the heap's priority order, and a `map_key` used for quick item lookup. The heap ensures that the item with the highest `heap_key` value is always at the top, while the map provides direct access to items using their `map_key`. The class includes methods for pushing new items, popping the maximum item, checking for item existence, deleting items by `map_key`, and maintaining the heap's structural integrity through `_heapify_up` and `_heapify_down` operations.
 
+### Tackling Pair Replacement Efficiency: Linked array
+
+Replacing pairs directly in a simple array presents a challenge: when we merge two elements into one, we need to shift all subsequent elements to the left, leading to potentially costly operations, especially for large texts and frequent merges.
+
+A linked list offers a solution with its ability to efficiently insert and delete elements. However, linked lists lack direct index access, making it difficult to track the positions of pairs within the text, which is crucial for our BPE algorithm.
+
+Enter the linked array, a hybrid data structure that marries the strengths of both arrays and linked lists. It maintains a doubly linked list of elements, where each node also stores its corresponding index in an array. This allows for:
+
+* **Fast Merging**: We can efficiently remove the two nodes representing the pair and insert a new node with the merged token, all without shifting the remaining elements.
+* **Direct Index Access**: The array provides immediate access to any element's position, essential for updating our priority map.
+
+The [`LinkedArray`][linked_array] class presents a specialized data structure tailored for efficient pair replacement in BPE training. It establishes a fixed-size array, initialized with an existing sequence of tokens, and a corresponding doubly linked list to facilitate seamless element manipulation.
+
+#### Key Methods and Functionality
+
+* `\_\_init\_\_(items)`:
+  * Constructs the linked array from an initial array of tokens items.
+  * Creates a doubly linked list, where each node stores a token and its corresponding array index.
+  * Populates the fixed-size array with references to these linked list nodes.
+* `get_by_index(index)`: Provides direct access to the token at the specified index in the array.
+* `get_next_index(index)`:
+  * Retrieves the index of the next token in the sequence, following the token at the given index.
+  * Returns None if the index is out of bounds, points to a None value, or refers to the last token in the list.
+  * Essential for traversing the linked list and identifying neighboring pairs during merging.
+* `replace_pair(index, new_item)`: 
+  * Core method for pair replacement in BPE training.
+  * Replaces the pair of tokens starting at index with the new_item.
+  * Updates both the linked list (removing the two original nodes and inserting a new one) and the array (setting the index of the second token in the pair to None and updating the index of the new node).
+
+In essence, the [`LinkedArray`][linked_array] acts as a bridge between the direct index access of arrays and the flexible insertion/deletion capabilities of linked lists. It's specifically designed to optimize the pair replacement process in BPE tokenization, contributing to a more performant and streamlined algorithm.
 
 [bpe_walk_through]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/bpe_walk_through.gif
 [bpe_wiki]: https://en.wikipedia.org/wiki/Byte_pair_encoding
@@ -107,3 +137,4 @@ The [`MaxPriorityMap`][max_prority_map_class] class implements a combination of 
 [max_priority_map]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/impl/max_priority_map.py
 [max_prority_map_class]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/impl/max_priority_map.py#L1
 [associative_array]: https://en.wikipedia.org/wiki/Associative_array
+[linked_array]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/impl/linked_array.py#L8
