@@ -160,7 +160,7 @@ The initial state of these structures is depicted below:
 
 ### Step 1: Merging the Most Frequent Pair
 
-As illustrated in the image below, our priority map identifies the pair {a, a} as the most frequent, occurring 4 times in our string at positions 0, 1, 5, and 6. We'll introduce a new token, "Z", to replace these occurrences. Starting with the first position (index 0), we consider the indices of the pair itself (0 and 1), its right neighbor (index 2), and its left neighbor (which is `None` in this case, as 'a' is the first character).
+As illustrated in the image below, our priority map identifies the pair {a, a} as the most frequent, occurring 4 times in our string at positions 0, 1, 5, and 6. We'll introduce a new token, "Z", to replace these occurrences. Starting with the first position (index 0), we consider the indices of the pair itself (0 and 1), its right neighbor (index 2), and its left neighbor (which is `None` in this case, as 'a' is the first character). After the merge at position 0, we remove this position from the set of pair positions associated with {a, a} in the priority map.
 
 ![Example: mergeing the first pair][first_pair_example]
 
