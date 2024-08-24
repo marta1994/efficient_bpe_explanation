@@ -156,7 +156,13 @@ We begin by initializing our priority map and linked array with the input string
 
 The initial state of these structures is depicted below:
 
-![Example: initial setup](https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/example_initial.png)
+![Example: initial setup][initial_setup_example]
+
+### Step 1: Merging the Most Frequent Pair
+
+As illustrated in the image below, our priority map identifies the pair {a, a} as the most frequent, occurring 4 times in our string at positions 0, 1, 5, and 6. We'll introduce a new token, "Z", to replace these occurrences. Starting with the first position (index 0), we consider the indices of the pair itself (0 and 1), its right neighbor (index 2), and its left neighbor (which is `None` in this case, as 'a' is the first character).
+
+![Example: mergeing the first pair][first_pair_example]
 
 [bpe_walk_through]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/bpe_walk_through.gif
 [bpe_wiki]: https://en.wikipedia.org/wiki/Byte_pair_encoding
@@ -167,3 +173,5 @@ The initial state of these structures is depicted below:
 [associative_array]: https://en.wikipedia.org/wiki/Associative_array
 [linked_array]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/impl/linked_array.py#L8
 [linked_array_gif]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/linked_array.gif
+[initial_setup_example]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/example_initial.png
+[first_pair_example]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/example_first_pair.gif
