@@ -170,6 +170,12 @@ The merging process necessitates adjustments to the neighboring pairs in our pri
 
 ![Example: updating the first neighboring pairs][updating_neightbors_1_example]
 
+### Merging the Next Occurrence
+
+Moving on to the next available position for the pair {a, a}, we skip position 1 (as it was removed in the previous merge) and proceed to position 5. Here, we focus on the indices 4, 5, 6, and 7, representing the left neighbor, the pair itself, and the right neighbor. We merge {a, a} at positions {5, 6}, deleting these tokens and inserting "Z" at position 5.
+
+![Example: merging the next occurrence][merging_next_occurrence_example]
+
 [bpe_walk_through]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/bpe_walk_through.gif
 [bpe_wiki]: https://en.wikipedia.org/wiki/Byte_pair_encoding
 [priority_queue]: https://en.wikipedia.org/wiki/Priority_queue
@@ -182,3 +188,4 @@ The merging process necessitates adjustments to the neighboring pairs in our pri
 [initial_setup_example]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/example_initial.png
 [first_pair_example]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/example_first_pair.gif
 [updating_neightbors_1_example]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/example_modifying_first_pairs.gif
+[merging_next_occurrence_example]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/example_second_pair.gif
