@@ -176,6 +176,14 @@ Moving on to the next available position for the pair {a, a}, we skip position 1
 
 ![Example: merging the next occurrence][merging_next_occurrence_example]
 
+### Updating Neighboring Pairs for the next occurrence
+
+Following the merge, we adjust the neighboring pairs in the priority map. The left neighbor pair {d, a} at positions {4, 5} is deleted entirely since it only occurred once. We then locate the right neighbor pair {a, a} at positions {6, 7} and remove position 6 from its set of positions.
+
+Next, we introduce the new pairs formed by the merge. The left neighbor pair becomes {d, Z} at positions {4, 5}. As this pair is new, we create a fresh entry in the priority map with its position. The right neighbor pair is now {Z, a} at positions {5, 7}. This pair already exists in the map, so we remove it, add the new position to its set (resulting in two positions), and reinsert it into the priority map. This ensures the map remains sorted correctly based on the updated pair counts. Notably, {Z, a} has now become one of the most frequent pairs and could be selected for the next merge step.
+
+![Example: updating the second neighboring pairs][updating_neighbors_2_example]
+
 [bpe_walk_through]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/bpe_walk_through.gif
 [bpe_wiki]: https://en.wikipedia.org/wiki/Byte_pair_encoding
 [priority_queue]: https://en.wikipedia.org/wiki/Priority_queue
@@ -189,3 +197,4 @@ Moving on to the next available position for the pair {a, a}, we skip position 1
 [first_pair_example]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/example_first_pair.gif
 [updating_neightbors_1_example]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/example_modifying_first_pairs.gif
 [merging_next_occurrence_example]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/example_second_pair.gif
+[updating_neighbors_2_example]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/example_modifying_second_pairs.gif
