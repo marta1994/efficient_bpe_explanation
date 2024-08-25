@@ -164,6 +164,12 @@ As illustrated in the image below, our priority map identifies the pair {a, a} a
 
 ![Example: mergeing the first pair][first_pair_example]
 
+### Updating Neighboring Pairs
+
+The merging process necessitates adjustments to the neighboring pairs in our priority map. We need to remove the pair starting with the left neighbor of the merged pair (if it exists) and the pair starting with the second token of the merged pair. In our current scenario, since the merged pair doesn't have a left neighbor, we only remove the right neighbor pair {a, a} at positions {1, 2}. Subsequently, we introduce new pairs formed by the merge. We add a pair starting with the left neighbor (if it exists) and ending with the merged token, and another pair starting with the merged token and ending with the right neighbor. Again, due to the absence of a left neighbor, we only add one new pair: {Z, b} at positions {0, 2}.
+
+![Example: updating the first neighboring pairs][updating_neightbors_1_example]
+
 [bpe_walk_through]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/bpe_walk_through.gif
 [bpe_wiki]: https://en.wikipedia.org/wiki/Byte_pair_encoding
 [priority_queue]: https://en.wikipedia.org/wiki/Priority_queue
@@ -175,3 +181,4 @@ As illustrated in the image below, our priority map identifies the pair {a, a} a
 [linked_array_gif]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/linked_array.gif
 [initial_setup_example]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/example_initial.png
 [first_pair_example]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/example_first_pair.gif
+[updating_neightbors_1_example]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/example_modifying_first_pairs.gif
