@@ -184,6 +184,31 @@ Next, we introduce the new pairs formed by the merge. The left neighbor pair bec
 
 ![Example: updating the second neighboring pairs][updating_neighbors_2_example]
 
+### Time Complexity Analysis of the Optimized BPE Tokenizer
+
+Let's break down the time complexity of the optimized BPE tokenizer algorithm, considering the key operations and data structures involved:
+
+ 1. **Initialization:**\
+ Building the initial priority map requires iterating through the text and counting pair occurrences, which takes O(N) time, where N is the text length.
+ Constructing the linked array also takes O(N) time, as we create nodes and populate the array with references.
+ 2. **Merging Iterations:**\
+ Each iteration involves the following steps:
+   * **Finding the most frequent pair:** This is now a constant-time operation O(1) thanks to the priority map.
+   * **Replacing the pair in the linked array:** This takes O(1) time as we directly access and modify the relevant nodes and array indices.
+   * **Updating neighboring pairs in the priority map:**
+     * Retrieving and modifying existing pairs based on their keys takes O(log M) time, where M is the number of unique pairs in the map (which is bounded by the vocabulary size).
+     * Inserting new pairs or re-inserting modified pairs also takes O(log M) time.
+     * In the worst case, we might need to update all M pairs in the map, leading to a potential O(M log M) complexity for this step.
+ 3. **Overall Complexity:**
+The total number of iterations (merges) is M.
+Each iteration has a worst-case complexity of O(M log M) due to the priority map updates.
+Therefore, the overall time complexity of the optimized BPE tokenizer is **O(N + M * M log M)**.
+
+**Comparison to Naive Algorithm:**
+
+The naive algorithm had a time complexity of O(N * M), where each iteration involved re-calculating pair counts and searching for the most frequent pair, both taking O(N) time.
+The optimized algorithm significantly improves upon this by using a priority map and linked array, reducing the per-iteration complexity to O(M log M) in the worst case.
+
 [bpe_walk_through]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/bpe_walk_through.gif
 [bpe_wiki]: https://en.wikipedia.org/wiki/Byte_pair_encoding
 [priority_queue]: https://en.wikipedia.org/wiki/Priority_queue
