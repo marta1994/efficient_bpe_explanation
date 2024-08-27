@@ -184,7 +184,7 @@ Next, we introduce the new pairs formed by the merge. The left neighbor pair bec
 
 ![Example: updating the second neighboring pairs][updating_neighbors_2_example]
 
-### Time Complexity Analysis of the Optimized BPE Tokenizer
+## Time Complexity Analysis of the Optimized BPE Tokenizer Training
 
 Let's break down the time complexity of the optimized BPE tokenizer algorithm, considering the key operations and data structures involved:
 
@@ -209,6 +209,20 @@ Therefore, the overall time complexity of the optimized BPE tokenizer is **O(N +
 The naive algorithm had a time complexity of O(N * M), where each iteration involved re-calculating pair counts and searching for the most frequent pair, both taking O(N) time.
 The optimized algorithm significantly improves upon this by using a priority map and linked array, reducing the per-iteration complexity to O(M log M) in the worst case.
 
+## Optimizing Text-to-Token Conversion with a Trie
+
+Instead of a naive linear search, we can leverage a trie (prefix tree) for efficient text-to-token conversion. The trie, constructed from the BPE vocabulary, enables fast prefix matching and handles potential token ambiguities through backtracking. During conversion, we traverse the input text from the beginning, always prioritizing the longest possible token match at each position.
+
+For a detailed understanding of tries, refer to the [Trie Wikipedia page][trie].
+
+Here is an example of how to build a prefix tree from a vocabulary list:
+
+![Build a trie][build_trie]
+
+Here is an example of how a text is converted to a list of tokens:
+
+![Convert to tokens][to_tokens]
+
 [bpe_walk_through]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/bpe_walk_through.gif
 [bpe_wiki]: https://en.wikipedia.org/wiki/Byte_pair_encoding
 [priority_queue]: https://en.wikipedia.org/wiki/Priority_queue
@@ -223,3 +237,6 @@ The optimized algorithm significantly improves upon this by using a priority map
 [updating_neightbors_1_example]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/example_modifying_first_pairs.gif
 [merging_next_occurrence_example]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/example_second_pair.gif
 [updating_neighbors_2_example]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/example_modifying_second_pairs.gif
+[trie]: https://en.wikipedia.org/wiki/Trie
+[build_trie]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/build_trie.gif
+[to_tokens]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/convert_to_tokens.gif
