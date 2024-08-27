@@ -223,6 +223,8 @@ Here is an example of how a text is converted to a list of tokens:
 
 ![Convert to tokens][to_tokens]
 
+In conclusion, I hope this exploration of BPE tokenization, from its naive implementation to optimized techniques, has shed light on the fascinating world of algorithmic efficiency in natural language processing. Happy coding!
+
 [bpe_walk_through]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/bpe_walk_through.gif
 [bpe_wiki]: https://en.wikipedia.org/wiki/Byte_pair_encoding
 [priority_queue]: https://en.wikipedia.org/wiki/Priority_queue
