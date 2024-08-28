@@ -99,7 +99,7 @@ To achieve this, we require the ability to retrieve heap items based on their "p
 
 #### [Max priroty map implementation][max_priority_map]
 
-The [`MaxPriorityMap`][max_prority_map_class] class implements a combination of a max-heap ([priority queue][priority_queue]) and a [map][associative_array]. It allows efficient storage and retrieval of items based on two keys: a `heap_key` used for maintaining the heap's priority order, and a `map_key` used for quick item lookup. The heap ensures that the item with the highest `heap_key` value is always at the top, while the map provides direct access to items using their `map_key`. The class includes methods for pushing new items, popping the maximum item, checking for item existence, deleting items by `map_key`, and maintaining the heap's structural integrity through `_heapify_up` and `_heapify_down` operations.
+The [`max_priority_map.py`][max_prority_map_class] implements a combination of a max-heap ([priority queue][priority_queue]) and a [map][associative_array]. It allows efficient storage and retrieval of items based on two keys: a `heap_key` used for maintaining the heap's priority order, and a `map_key` used for quick item lookup. The heap ensures that the item with the highest `heap_key` value is always at the top, while the map provides direct access to items using their `map_key`. The class includes methods for pushing new items, popping the maximum item, checking for item existence, deleting items by `map_key`, and maintaining the heap's structural integrity through `_heapify_up` and `_heapify_down` operations.
 
 ### Tackling Pair Replacement Efficiency: Linked array
 
@@ -112,7 +112,7 @@ Enter the linked array, a hybrid data structure that marries the strengths of bo
 * **Fast Merging**: We can efficiently remove the two nodes representing the pair and insert a new node with the merged token, all without shifting the remaining elements.
 * **Direct Index Access**: The array provides immediate access to any element's position, essential for updating our priority map.
 
-The [`LinkedArray`][linked_array] class presents a specialized data structure tailored for efficient pair replacement in BPE training. It establishes a fixed-size array, initialized with an existing sequence of tokens, and a corresponding doubly linked list to facilitate seamless element manipulation.
+The [`linked_array.py`][linked_array] presents a specialized data structure tailored for efficient pair replacement in BPE training. It establishes a fixed-size array, initialized with an existing sequence of tokens, and a corresponding doubly linked list to facilitate seamless element manipulation.
 
 #### Key Methods and Functionality
 
