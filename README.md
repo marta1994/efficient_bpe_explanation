@@ -20,7 +20,7 @@ This repository provides a clear, educational implementation of Byte Pair Encodi
 
 [BPE][bpe_wiki] is like teaching a computer a new language, where words are broken down into smaller, more manageable chunks. It's a bit like creating a shorthand for efficient text processing.
 
-The original algorithm works by iteratively finding the most common pairs of characters and replacing them with a new symbol. Think of it as finding the most popular phrases in a text and giving them a unique code. This process continues until no more pairs can be found, effectively compressing the original text.
+The original algorithm works by iteratively finding the most common pairs of characters and replacing them with a new symbol. Think of it as finding the most popular phrases in a text and giving them a unique code. It's worth noting that BPE is inherently **not deterministic**, as there might be multiple pairs with the same highest frequency at any given step. This means that different runs of the algorithm on the same text might produce slightly different vocabularies. This process continues until no more pairs can be found, effectively compressing the original text.
 
 To decompress, we simply reverse the process using a lookup table. It's like translating the shorthand back into the original language.
 
