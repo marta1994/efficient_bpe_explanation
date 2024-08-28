@@ -237,6 +237,17 @@ Here is an example of how a text is converted to a list of tokens:
 
 ![Convert to tokens][to_tokens]
 
+## Performance Comparison: Naive vs. Optimized BPE
+
+Let's see how the optimized BPE algorithm stacks up against the naive approach on a real-world dataset. We used the [Kaggle "Natural Language Processing with Disaster Tweets"][kaggle_dataset] dataset, running both algorithms in a default Kaggle notebook.
+
+| Task               | Naive Algorithm | Optimized Algorithm | Improvement | Dataset Size |
+|--------------------|-----------------:|---------------------:|-------------:|----------------|
+| Training           | 27 minutes      | 38 seconds          | **43X**      | ~1 MB (770K characters) |
+| Conversion (same dataset) | 13 minutes      | 0.48 seconds        | **1608X**    | ~1 MB (770K characters) |
+
+The optimized algorithm demonstrates a dramatic improvement in both training and conversion times, highlighting the effectiveness of the implemented optimizations. This performance boost makes the optimized approach far more suitable for handling larger datasets and real-world NLP applications.
+
 In conclusion, I hope this exploration of BPE tokenization, from its naive implementation to optimized techniques, has shed light on the fascinating world of algorithmic efficiency in natural language processing. Happy coding!
 
 [bpe_walk_through]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/bpe_walk_through.gif
@@ -258,3 +269,4 @@ In conclusion, I hope this exploration of BPE tokenization, from its naive imple
 [to_tokens]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/convert_to_tokens.gif
 [tokenizer_impl]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/impl/tokenizer.py
 [to_tokens_converter]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/impl/to_tokens_converter.py
+[kaggle_dataset]: https://www.kaggle.com/competitions/nlp-getting-started/data?select=train.csv
