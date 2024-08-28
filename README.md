@@ -144,7 +144,7 @@ Consider the string "abcddbcdabdcbabab".  If we replace the first pair "ab" with
 
 ![Linked array][linked_array_gif]
 
-In essence, the [`LinkedArray`][linked_array] acts as a bridge between the direct index access of arrays and the flexible insertion/deletion capabilities of linked lists. It's specifically designed to optimize the pair replacement process in BPE tokenization, contributing to a more performant and streamlined algorithm.
+In essence, the [`linked_array.py`][linked_array] acts as a bridge between the direct index access of arrays and the flexible insertion/deletion capabilities of linked lists. It's specifically designed to optimize the pair replacement process in BPE tokenization, contributing to a more performant and streamlined algorithm.
 
 ## BPE Tokenizer Training: A Visual Guide
 
