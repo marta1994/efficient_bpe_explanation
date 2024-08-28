@@ -1,5 +1,7 @@
 # Efficient BPE Tokenization from Scratch
 
+**TL;DR:** Dive into the [`tokenizer.py`][tokenizer_impl] file to explore a clear, educational implementation of BPE tokenization in plain Python, focused on algorithmic understanding. 
+
 This repository provides a clear, educational implementation of Byte Pair Encoding (BPE) tokenization in plain Python. The focus is on algorithmic understanding, not raw performance.
 
 ### Key Points:
@@ -242,3 +244,4 @@ In conclusion, I hope this exploration of BPE tokenization, from its naive imple
 [trie]: https://en.wikipedia.org/wiki/Trie
 [build_trie]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/build_trie.gif
 [to_tokens]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/convert_to_tokens.gif
+[tokenizer_impl]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/impl/tokenizer.py
