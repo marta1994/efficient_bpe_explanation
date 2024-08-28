@@ -211,7 +211,19 @@ Therefore, the overall time complexity of the optimized BPE tokenizer is **O(N +
 The naive algorithm had a time complexity of O(N * M), where each iteration involved re-calculating pair counts and searching for the most frequent pair, both taking O(N) time.
 The optimized algorithm significantly improves upon this by using a priority map and linked array, reducing the per-iteration complexity to O(M log M) in the worst case.
 
-## Optimizing Text-to-Token Conversion with a Trie
+## Efficient Text-to-Token Conversion: The Challenge
+
+Once our BPE tokenizer is trained, we possess a valuable map connecting token IDs to their corresponding strings.  For example:
+
+* 1 -> "not"
+* 2 -> "be"
+* 3 -> "to"
+* 4 -> "or"
+* 5 -> " "
+
+The task remains to efficiently convert raw text into a sequence of these token IDs.  Given this dictionary, we aim to transform the text **"to be or not to be"** into the array **[3, 5, 2, 5, 4, 5, 1, 5, 3, 5, 2, 5]**. While a naive approach might involve iterating through the text and searching for matches, we can achieve superior performance through a trie-based solution.
+
+### Optimizing Text-to-Token Conversion with a Trie
 
 Instead of a naive linear search, we can leverage a trie (prefix tree) for efficient text-to-token conversion. The trie, constructed from the BPE vocabulary, enables fast prefix matching and handles potential token ambiguities through backtracking. During conversion, we traverse the input text from the beginning, always prioritizing the longest possible token match at each position.
 
