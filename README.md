@@ -225,7 +225,7 @@ The task remains to efficiently convert raw text into a sequence of these token 
 
 ### Optimizing Text-to-Token Conversion with a Trie
 
-Instead of a naive linear search, we can leverage a trie (prefix tree) for efficient text-to-token conversion. The trie, constructed from the BPE vocabulary, enables fast prefix matching and handles potential token ambiguities through backtracking. During conversion, we traverse the input text from the beginning, always prioritizing the longest possible token match at each position.
+Instead of a naive linear search, we can leverage a trie (prefix tree) for efficient text-to-token conversion. The trie, constructed from the BPE vocabulary, enables fast prefix matching and handles potential token ambiguities through backtracking. During conversion, we traverse the input text from the beginning, always prioritizing the longest possible token match at each position. See the full implementation in [`to_tokens_converter.py`][to_tokens_converter].
 
 For a detailed understanding of tries, refer to the [Trie Wikipedia page][trie].
 
@@ -257,3 +257,4 @@ In conclusion, I hope this exploration of BPE tokenization, from its naive imple
 [build_trie]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/build_trie.gif
 [to_tokens]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/blob/convert_to_tokens.gif
 [tokenizer_impl]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/impl/tokenizer.py
+[to_tokens_converter]: https://github.com/marta1994/efficient_bpe_explanation/blob/main/impl/to_tokens_converter.py
